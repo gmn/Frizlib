@@ -12,8 +12,8 @@
 #define BUFFER_DEFAULT_ELEMENTS 1024
 
 
-// method to delete pointer data is only conditionally included
-// stupid that I have to do it this way
+// method to delete pointer data is only conditionally included.
+// stupid that I have to do it this way.
 template<typename type>
 void delete_contents( type * pStart, const size_t how_many ) ;
 
@@ -48,7 +48,7 @@ public:
     void init ( size_t sz =BUFFER_DEFAULT_ELEMENTS ) ;
 
     Buffer( void ) : free_p(0),_byte_size(0),deleteFunc(0),data(0) { }
-    //Buffer( bool b ) : free_p(0),_byte_size(0),data(0) { setDeletable( b ); }
+
     Buffer( deleteFunc_t D ) : free_p(0),_byte_size(0),data(0) { setDeletable( D ); }
 
     ~Buffer( void ) 
@@ -103,11 +103,6 @@ public:
     // also deletes *data and resets it 
     void destroy();
 
-/*
-    void setDeletable( bool tf ) { 
-        deleteFunc = ( tf ) ? &(delete_contents<type>) : 0;
-    }
-*/
     void setDeletable( deleteFunc_t D ) { deleteFunc = D; }
 };
 
@@ -292,10 +287,7 @@ void Buffer<type>::destroy()
 
 
 // call delete on each element of an array of specified length
-
-// templated function instead of class method because we can not be sure
-//  which type the class will be instantiated with. this way we only call it
-//  when we have pointer types, and setDeletable is called.
+// function instead of class method because some type won't be deletable in practice
 template<typename type>
 void delete_contents( type * pStart, const size_t how_many ) 
 {
@@ -315,9 +307,6 @@ void delete_contents( type * pStart, const size_t how_many )
 #endif
     }
 }
-
-
-
 
 
 /*
@@ -349,5 +338,5 @@ inline void buffer_delete( Buffer<type> ** buffer_pp )
 }
 
 
-#endif // __LIB_BUFFER_H__
+#endif // !__BUFFER_H__
 

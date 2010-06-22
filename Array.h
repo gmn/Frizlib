@@ -9,7 +9,7 @@
 /*
 ==============================================================================
 
-    array  
+    Array  
 
     * simple interface for managing array length. good for situations where
       you will need to use an array memory several times, but can't 
@@ -20,11 +20,11 @@
 
 
 template<typename type>
-struct array : public Object_t
+struct Array : public Object_t
 {
     type * data;
 
-    array() : data(0), _size(0)
+    Array() : data(0), _size(0)
     {
         init();
     }
@@ -55,7 +55,7 @@ struct array : public Object_t
         reset(sz);
     }
 
-    ~array()
+    ~Array()
     {
         if ( data ) 
         {
@@ -75,11 +75,11 @@ protected:
 
 /*
 ====================
- array::zero_out
+ Array::zero_out
 ====================
 */
 template <typename type>
-void array<type>::zero_out( void ) 
+void Array<type>::zero_out( void ) 
 {
 	size_t byte_sz = sizeof( type ) * _size;
 
